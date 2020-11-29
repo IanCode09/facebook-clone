@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Avatar } from '@material-ui/core'
 import {
     Videocam,
@@ -8,20 +8,36 @@ import {
 import '../css/MessageSender.css'
 
 function MessageSender() {
+    const [input, setInput] = useState('')
+    const [image, setImage] = useState(null)
+
     const handleSubmit = e => {
         e.preventDefault()
+    }
+
+    const handleChange = (e) => {
+        if(e.target.files[0]) {
+            setImage(e.target.files[0])
+        }
     }
 
     return (
         <div className="messageSender">
             <div className="messageSender__top">
-                <Avatar />
+                <Avatar src="https://avatars0.githubusercontent.com/u/69780199?s=460&u=3940fd45951e75044f959991d0107ee212d42207&v=4" />
                 <form>
                     <input
+                        type="text"
+                        value={input}
+                        onChange={(e) => setInput(e.target.value)}
                         className="messageSender__input"
                         placeholder={`Whats's on your mind`}
                     />
-                    <input placeholder="image URL (optional)" />
+                    <input 
+                        type="file"
+                        className="messageSender__fileSelector"
+                        onChange={handleChange}
+                    />
 
                     <button onClick={handleSubmit} type="submit">
                         Hidden Submit
@@ -29,7 +45,7 @@ function MessageSender() {
                 </form>
             </div>
 
-            <div className="messageSender_bottom">
+            <div className="messageSender__bottom">
                 <div className="messageSender__option">
                     <Videocam style={{ color: 'red' }} />
                     <h3>Live Video</h3>
